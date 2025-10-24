@@ -4,23 +4,20 @@ import java.io.*;
 import java.util.zip.ZipInputStream;
 import java.util.zip.ZipEntry;
 
-import static com.vlad2305m.ChatqalcClient.LOGGER;
-
 public class MathEngineInstaller {
+	
     public static void install(){
         try {
             File confDir = new File("./config/chatqalc/");
-            if (!confDir.exists() || !new File(PlatformSpecificStuff.qalcFile()).exists()) {
-                try (InputStream zip = (MathEngine.class.getResourceAsStream("/qalcplatforms/" + PlatformSpecificStuff.zipName()))) {
-                    dispatchZip(zip, confDir);}
-                PlatformSpecificStuff.linuxPerms();
+            if (!confDir.exists()) {
+                confDir.mkdir();
             }
             File defDir = new File("./config/chatqalc/definitions/");
             if (!defDir.exists()) {
                 try (InputStream zip = (MathEngine.class.getResourceAsStream("/definitions.zip"))) {
                     dispatchZip(zip, confDir);}
             }
-        } catch (IOException e) {LOGGER.error(e.toString());}
+        } catch (IOException e) {ChatqalcClient.LOGGER.error(e.toString());}
     }
 
 
