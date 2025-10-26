@@ -34,7 +34,7 @@ public class MathEngine {
 			
 			if (windows.exists()) {
 				qalcBin = windows.getPath();
-			} else if (linux.exists() && false) {
+			} else if (linux.exists()) {
 				qalcBin = linux.getPath();
 			} else if (local.exists()) {
 				try {
@@ -171,7 +171,9 @@ public class MathEngine {
 		}
 		
 		for (int i = 0; i < qalcAnswerBuffer.size(); i++) {
-			addMessage.accept(qalcAnswerBuffer.get(i));
+			String line = qalcAnswerBuffer.get(i);
+			if (line != null)
+				addMessage.accept(line);
 		}
 		qalcAnswerBuffer.clear();
 	}

@@ -49,6 +49,7 @@ public class ChatqalcClient implements ClientModInitializer {
 		if (originalText.isBlank())
 			return false;
 		MathEngine.addMessage = (s) -> {
+			System.out.println(s);
 			if (!s.isBlank() && !(s.charAt(0) == '>'))
 				broadcast.accept(stripAnsi(s));
 		};

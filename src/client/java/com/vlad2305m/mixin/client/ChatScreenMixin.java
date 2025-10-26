@@ -1,10 +1,5 @@
 package com.vlad2305m.mixin.client;
 
-import com.vlad2305m.ChatqalcClient;
-import net.minecraft.client.gui.screen.ChatScreen;
-import net.minecraft.client.gui.widget.TextFieldWidget;
-import net.minecraft.client.input.KeyInput;
-
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.Unique;
@@ -12,14 +7,20 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
+import com.vlad2305m.ChatqalcClient;
+
+import net.minecraft.client.gui.screen.ChatScreen;
+import net.minecraft.client.gui.widget.TextFieldWidget;
+import net.minecraft.client.input.KeyInput;
+
 @Mixin(ChatScreen.class)
 abstract class ChatScreenMixin {
     @Shadow protected TextFieldWidget chatField;
 
     @Unique private int messageHistorySize;
-    @Unique public void sendMessage(String chatText, boolean addToHistory) {}
+    @Shadow public void sendMessage(String chatText, boolean addToHistory) {}
 
-    @Inject(at = @At("HEAD"), method = "keyPressed(III)Z", cancellable = true)
+    @Inject(at = @At("HEAD"), method = "keyPressed(Lnet/minecraft/client/input/KeyInput;)Z", cancellable = true)
     public void keyPressed(KeyInput input, CallbackInfoReturnable<Boolean> cir) {
         Runnable exit = ()->{
             cir.setReturnValue(true);
